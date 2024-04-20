@@ -16,6 +16,7 @@ export default function Home() {
       <Carousel items={items} />
       <div>gola</div>
       <div>gola</div>
+      <div>gola</div>
     </section>
   );
 }
