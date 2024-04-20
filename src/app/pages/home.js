@@ -14,6 +14,7 @@ export default function Home() {
     <section>
       <StyledComponents />
       <Carousel items={items} />
+      <div>gola</div>
     </section>
   );
 }
