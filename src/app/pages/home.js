@@ -6,16 +6,17 @@ export default function Home() {
   const [value3, setValue3] = useState("");
   const [result, setResult] = useState(0);
   const [error, setError] = useState(null);
+  //const [inputDisabled, setInputDisabled] = useState(false)
 
   const handleValue1Change = (event) => {
     let inputValue = parseInt(event.target.value);
 
-    // Verificar si el valor supera el límite de 20
-    if (inputValue > 20) {
-      // Si supera el límite, ajustar el valor a 20
-      inputValue = 20;
+    if (inputValue > 120) {
+      console.log("el valor no puede sobrepasar 120")
+      setValue1(120)
+    } else {
+      return setValue1(inputValue)
     }
-    setValue1(event.target.value);
   };
 
   const handleValue2Change = (event) => {
@@ -50,8 +51,8 @@ export default function Home() {
           value={value1}
           onChange={handleValue1Change}
           placeholder="Años"
-          max={2}
         />
+        
         <input
           type="number"
           required
