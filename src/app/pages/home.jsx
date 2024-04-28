@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+
 export default function Home() {
   const [value1, setValue1] = useState("");
   const [value2, setValue2] = useState("");
@@ -9,19 +10,48 @@ export default function Home() {
   const [result2, setResult2] = useState(null);
   const [result3, setResult3] = useState(null);
   const [error, setError] = useState(null);
+  const [errorHoras, setErrorHoras] = useState(null);
+  const [errorEsperanza, setErrorEsperanza] = useState(null);
 
   const handleValue1Change = (event) => {
-    setValue1(event.target.value);
+    let inputValue1 = parseInt(event.target.value);
+
+    if (inputValue1 > 120) {
+      setValue1(120)
+    } else {
+      return setValue1(inputValue1)
+    };
   };
 
   const handleValue2Change = (event) => {
-    setValue2(event.target.value);
+
+    const inputValue2 = parseInt(event.target.value);
+
+    if (inputValue2 > 120) {
+      setValue2(120)
+      setErrorEsperanza('Eres optimista 😏')
+    } else {
+      setErrorEsperanza('');
+      return setValue2(inputValue2)
+    };
   };
+
   const handleValue3Change = (event) => {
-    setValue3(event.target.value);
+
+    const inputValue3 = parseInt(event.target.value);
+
+    if (inputValue3 > 20) {
+      setErrorHoras('Enserio duermes más de 20 horas?');
+      return setValue3(20);
+    } else {
+      setErrorHoras('');
+      return setValue3(inputValue3);
+    }
+
   };
 
   const handleCalculate = () => {
+
     if (!value1 || !value2) {
       setError("Ambos campos son obligatorios");
     }
@@ -33,7 +63,7 @@ export default function Home() {
     const hours = parseFloat(value3);
 
     // Realizar el cálculo matemático
-    
+
     // const hoursToYears = yearsLeft * 8760
     let yearsLeft = (num1 - num2);
     const añosDeVidaRestanteMenosHorasDeSueñoEnAños = (hours * 365) * yearsLeft / 8760
@@ -44,26 +74,31 @@ export default function Home() {
     setResult1(Math.abs(añosDeVidaRestanteMenosHorasDeSueñoEnAños))
     setResult2(Math.abs(añosDeVidaRestanteMenosHorasDeSueñoEnHoras))
     setResult3(Math.abs(añosDeVidaRestantesMenosAñosEnSueño))
-    
+
   };
 
   return (
     <section className="flex flex-col gap-y-2">
-        <h1 className="font-bold">Edad actual</h1>
-        <input
-          type="number"
-          required
-          value={value1}
-          onChange={handleValue1Change}
-        />
-        <div>
-          <h1 className="font-bold">Hasta que edad crees que viviras?</h1>
-          <input type="number" value={value2} onChange={handleValue2Change} />
-        </div>
-        <div>
-          <h1 className="font-bold">Cuantas horas al dia duermes?</h1>
-          <input type="number" value={value3} onChange={handleValue3Change} />
-        </div>
+      <h1 className="font-bold">Edad actual</h1>
+      <input
+        type="number"
+        required
+        value={value1}
+        onChange={handleValue1Change}
+      />
+
+
+      <div>
+        <h1 className="font-bold">Hasta que edad crees que viviras?</h1>
+        <input type="number" value={value2} onChange={handleValue2Change} />
+      </div>
+      {errorEsperanza && <div style={{ color: "red" }}>{errorHoras}</div>}
+
+      <div>
+        <h1 className="font-bold">Cuantas horas al dia duermes?</h1>
+        <input type="number" value={value3} onChange={handleValue3Change} />
+      </div>
+      {errorHoras && <div style={{ color: "red" }}>{errorHoras}</div>}
       <button onClick={handleCalculate} className="bg-slate-500 p-2">Calcular</button>
       {error && <div style={{ color: "red" }}>{error}</div>}
       <div>Tiempo de años restantes: <span className="text-blue-700">{result}</span></div>
