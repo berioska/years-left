@@ -28,7 +28,7 @@ export default function Home() {
     const inputValue2 = parseInt(event.target.value);
 
     if (inputValue2 > 120) {
-      setValue2(120)
+      (120)
       setErrorEsperanza('Eres optimista 😏')
     } else {
       setErrorEsperanza('');
