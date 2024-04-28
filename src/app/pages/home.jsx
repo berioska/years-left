@@ -11,12 +11,12 @@ export default function Home() {
   const [result3, setResult3] = useState(null);
   const [error, setError] = useState(null);
   const [errorHoras, setErrorHoras] = useState(null);
+  const [errorEsperanza, setErrorEsperanza] = useState(null);
 
   const handleValue1Change = (event) => {
     let inputValue1 = parseInt(event.target.value);
 
     if (inputValue1 > 120) {
-      console.log("el valor no puede sobrepasar 120")
       setValue1(120)
     } else {
       return setValue1(inputValue1)
@@ -25,12 +25,13 @@ export default function Home() {
 
   const handleValue2Change = (event) => {
 
-    const inputValue2 =  parseInt(event.target.value);
+    const inputValue2 = parseInt(event.target.value);
 
     if (inputValue2 > 120) {
-      console.log("el valor no puede sobrepasar 120")
       setValue2(120)
+      setErrorEsperanza('Eres optimista 😏')
     } else {
+      setErrorEsperanza('');
       return setValue2(inputValue2)
     };
   };
@@ -42,14 +43,15 @@ export default function Home() {
     if (inputValue3 > 20) {
       setErrorHoras('Enserio duermes más de 20 horas?');
       return setValue3(20);
-    }else{
+    } else {
       setErrorHoras('');
       return setValue3(inputValue3);
     }
-    
+
   };
 
   const handleCalculate = () => {
+
     if (!value1 || !value2) {
       setError("Ambos campos son obligatorios");
     }
@@ -84,17 +86,19 @@ export default function Home() {
         value={value1}
         onChange={handleValue1Change}
       />
-         
+
 
       <div>
         <h1 className="font-bold">Hasta que edad crees que viviras?</h1>
         <input type="number" value={value2} onChange={handleValue2Change} />
       </div>
+      {errorEsperanza && <div style={{ color: "red" }}>{errorHoras}</div>}
+
       <div>
         <h1 className="font-bold">Cuantas horas al dia duermes?</h1>
         <input type="number" value={value3} onChange={handleValue3Change} />
       </div>
-      {errorHoras?  <div style={{ color: "red" }}>{errorHoras}</div> : ''}
+      {errorHoras && <div style={{ color: "red" }}>{errorHoras}</div>}
       <button onClick={handleCalculate} className="bg-slate-500 p-2">Calcular</button>
       {error && <div style={{ color: "red" }}>{error}</div>}
       <div>Tiempo de años restantes: <span className="text-blue-700">{result}</span></div>
