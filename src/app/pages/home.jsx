@@ -12,15 +12,21 @@ export default function Home() {
   const [error, setError] = useState(null);
   const [errorHoras, setErrorHoras] = useState(null);
   const [errorEsperanza, setErrorEsperanza] = useState(null);
+  const [errorEdad, setErrorEdad] = useState(null);
+  const [errorValoresDeEdad, setErrorValoresDeEdad] = useState(null);
 
   const handleValue1Change = (event) => {
     let inputValue1 = parseInt(event.target.value);
 
     if (inputValue1 > 120) {
+      setErrorEdad("Seguro estás vivo?")
       setValue1(120)
-    } else {
+    } else{
+      setErrorEsperanza("");
       return setValue1(inputValue1)
     };
+
+    
   };
 
   const handleValue2Change = (event) => {
@@ -58,6 +64,9 @@ export default function Home() {
     if (value1 > value2) {
       setError("OOOOOOOH MAY GOD, ESCRIBA BIEN LOS DATOS 😒😒");
     }
+    if(value1 == value2){
+      setErrorValoresDeEdad("Pero..... no viviras nada ya ")
+    }
     const num1 = parseFloat(value1);
     const num2 = parseFloat(value2);
     const hours = parseFloat(value3);
@@ -75,6 +84,8 @@ export default function Home() {
     setResult2(Math.abs(añosDeVidaRestanteMenosHorasDeSueñoEnHoras))
     setResult3(Math.abs(añosDeVidaRestantesMenosAñosEnSueño))
 
+
+
   };
 
   return (
@@ -86,13 +97,15 @@ export default function Home() {
         value={value1}
         onChange={handleValue1Change}
       />
+      {errorEdad && <div style={{ color: "red" }}>{errorEdad}</div>}
 
+      {errorValoresDeEdad && <div style={{ color: "red" }}>{errorValoresDeEdad}</div>}
 
       <div>
         <h1 className="font-bold">Hasta que edad crees que viviras?</h1>
         <input type="number" value={value2} onChange={handleValue2Change} />
       </div>
-      {errorEsperanza && <div style={{ color: "red" }}>{errorHoras}</div>}
+      {errorEsperanza && <div style={{ color: "red" }}>{errorEsperanza}</div>}
 
       <div>
         <h1 className="font-bold">Cuantas horas al dia duermes?</h1>
